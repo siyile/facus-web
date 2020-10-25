@@ -5,18 +5,6 @@ pipeline {
         pollSCM '* * * * *'
     }
     stages {
-        stage('Deploy to AWS') {
-            environment {
-                DOCKER_HUB_LOGIN = credentials('docker-hub')
-            }
-            steps {
-                withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
-                    script {
-                        cfnUpdate(stack:'facus-web-stack',  file:'ecs.yml', params:['SubnetID':"${FACUS_WEB_SUBNET_ID}", 'DockerHubUsername':"${DOCKER_HUB_LOGIN_USR}", 'ServiceName':"facus-web"])
-                    }
-                }
-            }
-        }
         stage('Build Docker image') {
             steps {
                 sh 'docker build -t siyile/facus-web .'
@@ -29,6 +17,18 @@ pipeline {
             steps {
                 sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
                 sh 'docker push siyile/facus-web'
+            }
+        }
+        stage('Deploy to AWS') {
+            environment {
+                DOCKER_HUB_LOGIN = credentials('docker-hub')
+            }
+            steps {
+                withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
+                    script {
+                        cfnUpdate(stack:'facus-web-stack',  file:'ecs.yml', params:['SubnetID':"${FACUS_WEB_SUBNET_ID}", 'DockerHubUsername':"${DOCKER_HUB_LOGIN_USR}", 'ServiceName':"facus-web"])
+                    }
+                }
             }
         }
     }
