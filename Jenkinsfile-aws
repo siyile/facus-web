@@ -1,53 +1,34 @@
 pipeline {
-    agent none
+    agent any
 
     triggers {
         pollSCM '* * * * *'
     }
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:latest'
-                    args '-v "$PWD":/home/project -w /home/project'
-                }
-            }
-            steps {
-                sh 'npm i lerna -g --loglevel notice'
-                sh 'yarn run build'
-            }
-        }
-        stage('Build Docker image') {
-            agent any
-            steps {
-                sh 'docker build --tag facus-web'
-            }
-        }
-        stage('Push Docker image') {
-            agent any
-            environment {
-                DOCKER_HUB_LOGIN = credentials('docker-hub')
-            }
-            steps {
-                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
-                sh 'docker push facus-web'
-            }
-        }
         stage('Deploy to AWS') {
-            agent {
-                docker {
-                    image 'node:latest'
-                    args '-v "$PWD":/home/project -w /home/project'
-                }
-            }
             environment {
                 DOCKER_HUB_LOGIN = credentials('docker-hub')
             }
             steps {
                 withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
-                    sh 'yarn add cfn --dev'
-                    sh 'yarn cfn deploy facus-web-stack ecs.yml --subnetId=$FACUS_WEB_SUBNET_ID --dockerHubUsername=$DOCKER_HUB_LOGIN_USR --region=$AWS_REGION --serviceName=facus-web'
+                    script {
+                        cfnUpdate(stack:'facus-web-stack',  file:'ecs.yml', params:['SubnetID':"${FACUS_WEB_SUBNET_ID}", 'DockerHubUsername':"${DOCKER_HUB_LOGIN_USR}", 'ServiceName':"facus-web"])
+                    }
                 }
+            }
+        }
+        stage('Build Docker image') {
+            steps {
+                sh 'docker build -t siyile/facus-web .'
+            }
+        }
+        stage('Push Docker image') {
+            environment {
+                DOCKER_HUB_LOGIN = credentials('docker-hub')
+            }
+            steps {
+                sh 'docker login --username=$DOCKER_HUB_LOGIN_USR --password=$DOCKER_HUB_LOGIN_PSW'
+                sh 'docker push siyile/facus-web'
             }
         }
     }
