@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'http://facus-api.siyile.xyz:8080',
+  baseURL: 'http://siyile.xyz:8090',
 })
 
 export const fetchCounter = async (): Promise<string> => {
