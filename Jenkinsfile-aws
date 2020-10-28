@@ -19,17 +19,19 @@ pipeline {
                 sh 'docker push siyile/facus-web'
             }
         }
-        stage('Deploy to AWS') {
-            environment {
-                DOCKER_HUB_LOGIN = credentials('docker-hub')
-            }
-            steps {
-                withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
-                    script {
-                        cfnUpdate(stack:'facus-web-stack',  file:'ecs.yml', params:['SubnetID':"${FACUS_WEB_SUBNET_ID}", 'DockerHubUsername':"${DOCKER_HUB_LOGIN_USR}", 'ServiceName':"facus-web"])
+        /*
+            stage('Deploy to AWS') {
+                environment {
+                    DOCKER_HUB_LOGIN = credentials('docker-hub')
+                }
+                steps {
+                    withAWS(credentials: 'aws-credentials', region: env.AWS_REGION) {
+                        script {
+                            cfnUpdate(stack:'facus-web-stack',  file:'ecs.yml', params:['SubnetID':"${FACUS_WEB_SUBNET_ID}", 'DockerHubUsername':"${DOCKER_HUB_LOGIN_USR}", 'ServiceName':"facus-web"])
+                        }
                     }
                 }
             }
-        }
+        */
     }
 }
