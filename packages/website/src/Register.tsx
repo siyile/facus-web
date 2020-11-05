@@ -1,10 +1,12 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Avatar from '@material-ui/core/Avatar'
 import TextField from '@material-ui/core/TextField'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
+import { Container } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Register(): ReactElement {
+  const history = useHistory()
   const classes = useStyles()
   const subjectOptions = [
     { value: 'cs', label: 'computer science' },
@@ -95,25 +98,22 @@ function Register(): ReactElement {
   }
 
   function openSign(): void {
-    window.location.href = '/signin'
+    history.push('/signin')
+    // window.location.href = '/signin'
   }
 
   return (
     <>
-      <div className={classes.paper}>
-        <IconButton className={classes.options}>
-          <Avatar
-            // src="/images/example.jpg"
-            style={{
-              margin: '10px',
-              width: '60px',
-              height: '60px',
-            }}
-          ></Avatar>
-        </IconButton>
-        <div className={classes.inputRow}>
-          <Grid container spacing={10} className={classes.options}>
-            <Grid item xs={12} sm={6}>
+      <Container>
+        <Grid
+          container
+          justify={'center'}
+          direction={'column'}
+          alignItems="center"
+        >
+          <Avatar />
+          <Grid container direction="row" spacing={4} justify="center">
+            <Grid item>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -125,7 +125,7 @@ function Register(): ReactElement {
                 autoComplete="firstName"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -139,23 +139,21 @@ function Register(): ReactElement {
             </Grid>
           </Grid>
 
-          <Grid container spacing={10} className={classes.options}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                required
-                id="email"
-                label="Your Email"
-                name="email"
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="email"
-              />
-            </Grid>
+          <Grid item>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              required
+              id="email"
+              label="Your Email"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+            />
           </Grid>
-          <Grid container spacing={10} className={classes.options}>
-            <Grid item xs={12} sm={6}>
+          <Grid container spacing={10}>
+            <Grid item xs={12}>
               <TextField
                 id="select-subject"
                 select
@@ -199,8 +197,8 @@ function Register(): ReactElement {
           >
             submit
           </Button>
-        </div>
-      </div>
+        </Grid>
+      </Container>
     </>
   )
 }
