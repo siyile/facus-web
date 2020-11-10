@@ -4,13 +4,14 @@ import Learn from './Learn'
 import Home from './Home'
 import SignIn from './SignIn'
 import Register from './Register'
+import DashBoard from './features/Common/DashBoard'
 
 function Content(): ReactElement {
   return (
     <Router>
       <Switch>
         <Route path="/" exact>
-          <Home />
+          <DashBoard />
         </Route>
         <Route path="/learn" exact>
           <Learn />
