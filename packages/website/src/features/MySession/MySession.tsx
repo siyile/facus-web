@@ -14,7 +14,7 @@ const MySession = (): ReactElement => {
         <Grid container item spacing={2}>
           <Grid item xs={4}>
             <UpcomingSessionCard
-              name={'Ada Wang'}
+              name={'Ada Wong'}
               time={new Date()}
               subject={'Chemistry'}
               year={'Freshman'}
@@ -30,7 +30,7 @@ const MySession = (): ReactElement => {
           </Grid>
           <Grid item xs={4}>
             <UpcomingSessionCard
-              name={'Ada Wang'}
+              name={'Ada Wong'}
               time={new Date()}
               subject={'Chemistry'}
               year={'Freshman'}
@@ -38,7 +38,7 @@ const MySession = (): ReactElement => {
           </Grid>
           <Grid item xs={4}>
             <UpcomingSessionCard
-              name={'Ada Wang'}
+              name={'Ada Wong'}
               time={new Date()}
               subject={'Chemistry'}
               year={'Freshman'}
