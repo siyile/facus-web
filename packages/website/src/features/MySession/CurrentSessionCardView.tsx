@@ -6,21 +6,17 @@ import Countdown from 'react-countdown'
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
+import Bullet from '../../UtilComponents/Bullet'
 
 const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
 })
 
 const CurrentSessionCardView = (): ReactElement => {
   const classes = useStyles()
-  const bull = <span className={classes.bullet}>•</span>
+  const bull = <Bullet />
 
   return (
     <>
@@ -30,7 +26,7 @@ const CurrentSessionCardView = (): ReactElement => {
             Current Session
           </Typography>
           <Typography variant={'h5'} component={'h2'}>
-            Tom Brady
+            Leon S. Kennedy
           </Typography>
           <Typography className={classes.pos} color={'textSecondary'}>
             Sophomore {bull} Computer Science
