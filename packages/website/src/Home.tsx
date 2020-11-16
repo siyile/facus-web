@@ -1,17 +1,24 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react'
 import { Button, Typography } from '@material-ui/core'
-import { fetchCounter } from './api'
+import { getProfile, fetchCounter } from './api'
 
 
+
+export interface Res {
+  _links: {
+    self: {
+      href : string
+    }
+    users: {
+      href: string
+    }
+  }
+}
 
 const Home = (): ReactElement => {
   const [value, setValue] = useState('This is Material-UI')
 
-
-  const fetchData = async () => {
-    const counterData = await fetchCounter()
-    setValue(counterData)
-  }
+  
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -23,9 +30,11 @@ const Home = (): ReactElement => {
   //     .catch((e) => console.log('Failed'))
   // }, [])
 
-  const submit = useCallback(()=> {
-    fetchData()
-  }, [])
+  const submit = () => {
+    getProfile()
+      .then((r) => console.log(r._links.users.href))
+      .catch((e) => console.log('Failed'))
+  }
 
   return (
     <>

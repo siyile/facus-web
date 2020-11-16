@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Learn from './Learn'
 import Home from './Home'
-import SignIn from './SignIn'
-import Register from './Register'
+import SignIn from './features/Register/SignIn'
+import Register from './features/Register/Register'
 import DashBoard from './features/Common/DashBoard'
 
 function Content(): ReactElement {
@@ -11,6 +11,9 @@ function Content(): ReactElement {
     <Router>
       <Switch>
         <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/dashboard" exact>
           <DashBoard />
         </Route>
         <Route path="/learn" exact>
