@@ -24,6 +24,12 @@ export const register = async (user : UserInfo) : Promise<string> => {
   return response.data
 }
 
+export const startMatch = async (goal : string) : Promise<string> => {
+  const response = await client.post('/matching', goal)
+  return response.data
+}
+
+
 export const getProfile = async (): Promise<Res> => {
   const response = await client.get('/profile')
   return response.data

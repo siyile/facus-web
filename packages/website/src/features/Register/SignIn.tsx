@@ -79,9 +79,8 @@ export default function SignIn() {
     console.log(user)
     login(user)
       .then((res) => {
-        console.log("success")
         console.log(res)
-        // window.location.href = '/dashboard'
+        window.location.href = '/match'
       })
       .catch((error) => {
         if(error.respose) {
@@ -93,7 +92,8 @@ export default function SignIn() {
         }else if (error.request) {
           // The request was made but no response was received
           console.log(' The request was made but no response was received')
-          console.log(error.request);
+          console.log(error.request)
+          alert(error.request.response)
           // console.log(error.request.response);
         } else {
           // Something happened in setting up the request that triggered an Error

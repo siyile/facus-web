@@ -107,7 +107,6 @@ const RegisterView = (): ReactElement => {
   }
 
   function submit(): void {
-    // todo: submit all states to server.
     if (!checkAll()) {
       return
     }
@@ -129,9 +128,8 @@ const RegisterView = (): ReactElement => {
       })
       .catch((e) => {
         console.log('error')
-        console.log(e)
+        alert(e.request.response)
       })
-    // openSign()
   }
 
   function openSign(): void {

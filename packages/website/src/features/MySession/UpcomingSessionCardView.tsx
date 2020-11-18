@@ -4,15 +4,12 @@ import CardContent from '@material-ui/core/CardContent'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import moment from 'moment'
+import { getRandomInt } from '../../util/math'
+import Bullet from '../../UtilComponents/Bullet'
 
 const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
   },
 })
 
@@ -23,15 +20,11 @@ export type Props = {
   subject: string
 }
 
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * Math.floor(max))
-}
-
 const UpcomingSessionCardView = (props: Props): ReactElement => {
   const classes = useStyles()
-  const bull = <span className={classes.bullet}>•</span>
+  const bull = <Bullet />
 
-  const [rand] = useState(getRandomInt(100000))
+  const [rand] = useState(getRandomInt(1000000))
 
   return (
     <>
