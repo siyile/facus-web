@@ -117,16 +117,20 @@ const RegisterView = (): ReactElement => {
       email,
       password: password1,
       subject,
-      studyYear: studyYear,
+      studyYear,
       country,
     }
-    // console.log(user)
+    console.log(user)
     register(user)
       .then((res) => {
+        console.log('success')
         console.log(res)
         openSign()
       })
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        console.log('error')
+        console.log(e)
+      })
     // openSign()
   }
 

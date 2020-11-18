@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export interface LoginInfo {
-  userName: string
+  email: string
   password: string
 }
 
@@ -73,7 +73,7 @@ export default function SignIn() {
       return
     }
     let user: LoginInfo = {
-      userName : email,
+      email,
       password,
     }
     console.log(user)
@@ -81,7 +81,7 @@ export default function SignIn() {
       .then((res) => {
         console.log("success")
         console.log(res)
-        window.location.href = '/dashboard'
+        // window.location.href = '/dashboard'
       })
       .catch((error) => {
         if(error.respose) {

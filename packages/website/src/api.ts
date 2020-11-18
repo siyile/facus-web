@@ -3,6 +3,7 @@ import {Res} from './Home'
 import {UserInfo} from './features/Register/RegisterView'
 import {LoginInfo} from './features/Register/SignIn'
 
+
 const client = axios.create({
   baseURL: 'http://siyile.xyz:8090',
 })
