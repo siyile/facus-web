@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
 import MailIcon from '@material-ui/icons/Mail'
+import AlarmOnIcon from '@material-ui/icons/AlarmOn'
 import ListItemText from '@material-ui/core/ListItemText/ListItemText'
 import AppBar from '@material-ui/core/AppBar'
 import Typography from '@material-ui/core/Typography'
@@ -14,6 +15,7 @@ import { Theme, makeStyles } from '@material-ui/core/styles'
 import { Toolbar } from '@material-ui/core'
 import MySession from '../features/MySession/MySession'
 import SessionPanel from '../features/SessionPanel/SessionPanel'
+import Match from '../features/Match/Match'
 import { Link } from 'react-router-dom'
 
 const drawerWidth = 240
@@ -59,6 +61,10 @@ const DashBoard = (props: Props): ReactElement => {
       content = <MySession />
       title = 'My Session'
       break
+    case 'match':
+      content = <Match />
+      title = 'Start Matching'
+      break
   }
 
   return (
@@ -81,12 +87,13 @@ const DashBoard = (props: Props): ReactElement => {
         <Divider />
         <List>
           {[
+            ['Start Matching', 'match'],
             ['Session Park', '/sessions'],
-            ['My Session', 'mysession'],
+            ['My Session', 'mysession']
           ].map(([text, url], index) => (
             <ListItem button key={text} component={Link} to={url}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index === 0 ?  <AlarmOnIcon/> : index === 1 ? <MailIcon /> : <InboxIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
