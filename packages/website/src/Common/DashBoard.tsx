@@ -63,7 +63,7 @@ const DashBoard = (props: Props): ReactElement => {
       break
     case 'match':
       content = <Match />
-      title = 'Start Matching'
+      title = 'Start a session'
       break
   }
 
@@ -87,7 +87,7 @@ const DashBoard = (props: Props): ReactElement => {
         <Divider />
         <List>
           {[
-            ['Start Matching', 'match'],
+            ['Start a session', 'match'],
             ['Session Park', '/sessions'],
             ['My Session', 'mysession']
           ].map(([text, url], index) => (
