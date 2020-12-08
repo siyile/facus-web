@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Res } from './Home'
 import { UserInfo } from './features/Register/RegisterView'
 import { LoginInfo } from './features/Register/SignIn'
+import Session from './Model/session'
 
 const client = axios.create({
   baseURL:
@@ -25,11 +26,26 @@ export const register = async (user: UserInfo): Promise<string> => {
 }
 
 export const startMatch = async (goal: string): Promise<string> => {
-  const response = await client.post('/matching', goal)
+  const response = await client.post('/session/match', {'tag': goal})
   return response.data
 }
 
 export const getProfile = async (): Promise<Res> => {
   const response = await client.get('/profile')
+  return response.data
+}
+
+export const getSessionById = async (sid : string): Promise<Session> => {
+  const response = await client.get('/session/' + sid)
+  return response.data
+}
+
+export const getAllSession = async (): Promise<Array<Session>> => {
+  const response = await client.get('/session')
+  return response.data
+}
+
+export const getUserSession = async (): Promise<Array<Session>> => {
+  const response = await client.get('/session/user')
   return response.data
 }

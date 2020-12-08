@@ -62,8 +62,8 @@ const Match = (): ReactElement => {
   const [selectedValue, setSelectedValue] = React.useState('');
   
   // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date('2014-08-18T21:11:54'),
+  const [selectedDate, setSelectedDate] = React.useState<Date>(
+    new Date('2020-12-08T00:00:00'),
   );
 
 
@@ -72,8 +72,13 @@ const Match = (): ReactElement => {
   };
   const handleClose = () => {
     console.log(selectedDate)
+    console.log(selectedDate.getTime() / 1000)
     setOpen(false);
   };
+
+  function reserve(): void {
+    
+  }
 
   function submit(): void {
     if (goal === '') {
@@ -86,20 +91,18 @@ const Match = (): ReactElement => {
     }
     setIsMatching(true)
     // 2s delay for matching
-    setTimeout(() => {
-      startMatch(goal)
-        .then((res) => {
-          setIsMatching(false)
-          console.log('success')
-          console.log(res)
-        })
-        .catch((e) => {
-          setIsMatching(false)
-          console.log('error')
-          console.log(e)
-          alert(e.request.response)
-        })
-    }, 2000)
+    startMatch(goal)
+      .then((res) => {
+        setIsMatching(false)
+        console.log('success')
+        console.log(res)
+      })
+      .catch((e) => {
+        setIsMatching(false)
+        console.log('error')
+        console.log(e)
+        alert(e.request.response)
+      })
   }
   return (
     <Container className={classes.container} component="main" maxWidth="sm">

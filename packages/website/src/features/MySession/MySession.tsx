@@ -3,8 +3,25 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import CurrentSessionCardView from './CurrentSessionCardView'
 import UpcomingSessionCard from './UpcomingSessionCard'
+import {getUserSession} from '../../api'
+
+
 
 const MySession = (): ReactElement => {
+  
+  //get user session data by cookie
+  const getData = ()=> {
+    getUserSession().then((res)=> {
+      console.log(res.length)
+      console.log(res[0])
+    }).catch((e) => {
+      console.log('error')
+      console.log(e)
+      alert(e.request.response)
+    })
+  }
+
+
   return (
     <Container>
       <Grid container direction={'column'} spacing={4}>
