@@ -10,7 +10,7 @@ function Content(): ReactElement {
     <Router>
       <Switch>
         <Route path="/" exact>
-          <DashBoard content={'sessions'} />
+          <Home/>
         </Route>
         <Route path="/match">
           <DashBoard content={'match'} />  
