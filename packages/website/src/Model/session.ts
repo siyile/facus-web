@@ -12,4 +12,5 @@ interface Session {
   Duration: number
 }
 
+
 export default Session

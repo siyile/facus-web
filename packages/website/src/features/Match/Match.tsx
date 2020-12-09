@@ -6,10 +6,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { startMatch } from '../../api';
+import { startMatch, getSessionById, startSession } from '../../api';
 import MaterialUIPickers from './TimeDialog'
 import DialogActions from '@material-ui/core/DialogActions';
-
+import AlertDialog from "../../util/AlertDialog"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   btn_container: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center', 
+    alignItems: 'center',
     marginTop: theme.spacing(8)
   },
   items: {
@@ -52,6 +52,12 @@ const Progress = (): ReactElement => {
   )
 }
 
+export interface matchInfo {
+  operation: string,
+  tag: string,
+  startTime: number
+}
+
 
 const Match = (): ReactElement => {
   const classes = useStyles()
@@ -59,47 +65,103 @@ const Match = (): ReactElement => {
   const [goal, setGoal] = React.useState('')
   const [isMatching, setIsMatching] = React.useState(false)
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState('');
-  
-  // The first commit of Material-UI
+
   const [selectedDate, setSelectedDate] = React.useState<Date>(
-    new Date('2020-12-08T00:00:00'),
+    new Date(),
   );
 
 
   const handleClickOpen = () => {
+    setSelectedDate(new Date())
     setOpen(true);
   };
   const handleClose = () => {
-    console.log(selectedDate)
-    console.log(selectedDate.getTime() / 1000)
+    // console.log(selectedDate)
+    // console.log(selectedDate.getTime() / 1000)
     setOpen(false);
   };
 
-  function reserve(): void {
-    
+  // Pick up a time
+  function createSession(): void {
+    let info: matchInfo = {
+      operation: "create",
+      tag: goal,
+      startTime: selectedDate.getTime() / 1000
+    }
+    console.log(info)
+    startSession(info)
+      .then((res) => {
+        console.log(res)
+        if (res.status === "created") {
+          handleClose()
+          alert("Session created at" + new Date(res.startTime * 1000))
+        }
+      })
+      .catch((e) => {
+        console.log('error match')
+        console.log(e)
+        handleClose()
+        alert(e.request.response)
+      })
   }
 
+  // Query session by sid
+  // 1. If session status is matched, stop the matching process.
+  // 2. If session status is created, recursively call
+  function continueMatch(sid: string): void {
+    // todo: bug, cannot cancel match
+    // console.log("getSessionById, isMatching" + isMatching)
+    // if(isMatching === false)
+    //   return
+    console.log("getSessionById" + sid)
+    getSessionById(sid)
+      .then((res) => {
+        if (res.status === "matched") {
+          setIsMatching(false)
+          window.location.href = res.url
+        } else {
+          setTimeout(function () {
+            continueMatch(sid);
+          }, 1000)
+        }
+      })
+      .catch((e) => {
+        setIsMatching(false)
+        console.log('error match')
+        console.log(e)
+        AlertDialog(e.request.response)
+        // alert(e.request.response)
+      })
+  }
+
+  // Start match process
+  // 1. If session status is matched, stop the matching process.
+  // 2. If session status is created, jump to continue matching process.
   function submit(): void {
     if (goal === '') {
       alert('Goal cannot be empty')
       return
     }
+    console.log("submit, isMatching" + isMatching)
     if (isMatching) {
       setIsMatching(false)
       return
     }
     setIsMatching(true)
-    // 2s delay for matching
     startMatch(goal)
       .then((res) => {
-        setIsMatching(false)
         console.log('success')
         console.log(res)
+        if (res.status === "matched") {
+          setIsMatching(false)
+          window.location.href = res.url
+        } else {
+          continueMatch(res.sid)
+        }
       })
       .catch((e) => {
         setIsMatching(false)
-        console.log('error')
+        console.log('error submit')
         console.log(e)
         alert(e.request.response)
       })
@@ -142,10 +204,10 @@ const Match = (): ReactElement => {
       <Dialog className={classes.dialog} aria-labelledby="simple-dialog-title" open={open} onClose={handleClose}>
         <DialogTitle id="simple-dialog-title">Set a time for your session</DialogTitle>
         <MaterialUIPickers
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}/>
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate} />
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={createSession} color="primary">
             Agree
           </Button>
         </DialogActions>

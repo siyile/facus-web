@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { Res } from './Home'
-import { UserInfo } from './features/Register/RegisterView'
+import UserInfo  from './Model/user'
 import { LoginInfo } from './features/Register/SignIn'
+import { matchInfo} from './features/Match/Match'
 import Session from './Model/session'
 
 const client = axios.create({
@@ -25,10 +26,17 @@ export const register = async (user: UserInfo): Promise<string> => {
   return response.data
 }
 
-export const startMatch = async (goal: string): Promise<string> => {
-  const response = await client.post('/session/match', {'tag': goal})
+export const startMatch = async (goal: string): Promise<Session> => {
+  const response = await client.post('/session/match', {"tag": goal})
   return response.data
 }
+
+export const startSession = async (info: matchInfo): Promise<Session> => {
+  const response = await client.post('/session', info)
+  return response.data
+}
+
+
 
 export const getProfile = async (): Promise<Res> => {
   const response = await client.get('/profile')

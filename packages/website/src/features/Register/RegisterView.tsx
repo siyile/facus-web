@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import { register } from '../../api'
+import UserInfo from '../../Model/user'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,15 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export interface UserInfo {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  subject: string
-  studyYear: string
-  country: string
-}
+
 
 const RegisterView = (): ReactElement => {
   const classes = useStyles()
