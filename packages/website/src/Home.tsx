@@ -22,29 +22,43 @@ export interface Res {
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundImage: `url(${background})`,
+    // opacity: '0.95',
     height: '100vh',
-    display: 'flex',
+    display: 'block',
     flexDirection: 'row',
     // alignItems: 'center',
     //   marginTop: theme.spacing(8)
   },
   content: {
-    marginTop: '40vh',
+    paddingTop: '40vh'
+    // marginTop: '40vh',
   },
   words: {
     alignContent: 'center',
     alignItems: 'center',
   },
-  btns: {
+  btns1: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
     margin: theme.spacing(4),
     height: theme.spacing(8),
-    marginLeft: theme.spacing(8),
+    marginRight: theme.spacing(20),
+  },
+  btns2: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    margin: theme.spacing(4),
+    height: theme.spacing(8),
+    marginRight: theme.spacing(4),
   },
 }))
 
 const WhiteTextTypography = withStyles({
   root: {
-    color: "#FFFFFF"
+    color: "#4648aa",
+    // opacity: '0.7'
   }
 })(Typography);
 
@@ -80,19 +94,21 @@ const Home = (): ReactElement => {
 
   return (
     <div className={classes.container}>
-      <Typography variant="h1" color="primary">Focus Now</Typography>
       <Container className={classes.content}>
-
-        <WhiteTextTypography variant="h2" color="textPrimary" align="center">
+        {/* <Typography variant="h1" color="initial" align="center">
+          Join Focus Now</Typography> */}
+        <WhiteTextTypography variant="h1" color="textPrimary" align="center">
           Join Focus Now</WhiteTextTypography>
-        <WhiteTextTypography variant="h2" color="initial" align="center">
-          Work productively by working together</WhiteTextTypography>
+        <Typography variant="h3" color="initial" align="center">
+        Focus Now helps you work productively together</Typography>
+        {/* <WhiteTextTypography variant="h3" color="initial" align="center">
+          </WhiteTextTypography> */}
       </Container>
-      <Button className={classes.btns} onClick={signUp}>
+      <Button className={classes.btns1}  variant="contained" onClick={signUp}>
         Sign up
       </Button>
 
-      <Button className={classes.btns} variant="contained" color="primary" onClick={login}>
+      <Button className={classes.btns2} variant="contained" color="primary" onClick={login}>
         Log in
       </Button>
     </div>
