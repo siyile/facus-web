@@ -109,7 +109,7 @@ const RegisterView = (): ReactElement => {
       subject,
       studyYear,
       country,
-      uid: '0',
+      id: '0',
     }
     console.log(user)
     register(user)
