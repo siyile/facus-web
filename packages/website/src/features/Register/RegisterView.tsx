@@ -39,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-
-
 const RegisterView = (): ReactElement => {
   const classes = useStyles()
   const subjectOptions = [
@@ -111,6 +109,7 @@ const RegisterView = (): ReactElement => {
       subject,
       studyYear,
       country,
+      uid: '0',
     }
     console.log(user)
     register(user)
