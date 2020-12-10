@@ -6,5 +6,5 @@ export default interface UserInfo {
   subject: string
   studyYear: string
   country: string
-  uid: string
+  id: string
 }

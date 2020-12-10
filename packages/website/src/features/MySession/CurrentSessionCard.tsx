@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react'
+import React, { ReactElement, useCallback, useEffect, useState } from 'react'
 import Card from '@material-ui/core/Card/Card'
 import CardContent from '@material-ui/core/CardContent'
 import { Typography } from '@material-ui/core'
@@ -32,6 +32,12 @@ const CurrentSessionCard = (props: Props): ReactElement => {
     window.open(url)
   }, [])
 
+  const [countDown, setCountDown] = useState(Date.now)
+
+  useEffect(() => {
+    setCountDown(session ? session.endTime * 1000 : Date.now())
+  }, [session])
+
   return (
     <>
       <Card>
@@ -47,10 +53,7 @@ const CurrentSessionCard = (props: Props): ReactElement => {
             {user ? user.subject : 'Unknown'}
           </Typography>
           <Typography variant={'h1'} component={'p'}>
-            <Countdown
-              date={session ? session.endTime : Date.now()}
-              daysInHours
-            />
+            <Countdown date={countDown} daysInHours key={countDown} />
           </Typography>
         </CardContent>
         <CardActions>

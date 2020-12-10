@@ -39,9 +39,9 @@ const MySession = (): ReactElement => {
     if (!user || !s) {
       return null
     }
-    if (s.uid1 === user.uid) {
+    if (s.uid1 === user.id) {
       return s.user2
-    } else if (s.uid2 === user.uid) {
+    } else if (s.uid2 === user.id) {
       return s.user1
     }
     return null
