@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { Res } from './Home'
-import UserInfo  from './Model/user'
+import UserInfo from './Model/user'
 import { LoginInfo } from './features/Register/SignIn'
-import { matchInfo} from './features/Match/Match'
+import { matchInfo } from './features/Match/Match'
 import Session from './Model/session'
 
 const client = axios.create({
@@ -27,7 +27,7 @@ export const register = async (user: UserInfo): Promise<string> => {
 }
 
 export const startMatch = async (goal: string): Promise<Session> => {
-  const response = await client.post('/session/match', {"tag": goal})
+  const response = await client.post('/session/match', { tag: goal })
   return response.data
 }
 
@@ -36,24 +36,39 @@ export const startSession = async (info: matchInfo): Promise<Session> => {
   return response.data
 }
 
-
-
 export const getProfile = async (): Promise<Res> => {
   const response = await client.get('/profile')
   return response.data
 }
 
-export const getSessionById = async (sid : string): Promise<Session> => {
+export const getSessionById = async (sid: string): Promise<Session> => {
   const response = await client.get('/session/' + sid)
   return response.data
 }
 
-export const getAllSession = async (): Promise<Array<Session>> => {
+export const getAllSession = async (): Promise<Session[]> => {
   const response = await client.get('/session')
+  console.log(response.data)
   return response.data
 }
 
-export const getUserSession = async (): Promise<Array<Session>> => {
+export const getUserSession = async (): Promise<Session[]> => {
   const response = await client.get('/session/user')
+  console.log(response.data)
   return response.data
+}
+
+export const getUser = async (): Promise<UserInfo> => {
+  const response = await client.get('/session/myInfo')
+  console.log(response.data)
+  return response.data
+}
+
+export const joinSession = async (sid: string): Promise<string> => {
+  const response = await client.post(`/session/join?sid=${sid}`)
+  return response.data
+}
+
+export const getUserAndSession = async (): Promise<[UserInfo, Session[]]> => {
+  return await Promise.all([getUser(), getUserSession()])
 }
