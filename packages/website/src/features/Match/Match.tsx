@@ -56,6 +56,7 @@ export interface matchInfo {
   operation: string,
   tag: string,
   startTime: number
+  duration: number
 }
 
 
@@ -86,7 +87,8 @@ const Match = (): ReactElement => {
     let info: matchInfo = {
       operation: "create",
       tag: goal,
-      startTime: selectedDate.getTime() / 1000
+      startTime: selectedDate.getTime() / 1000,
+      duration: 60
     }
     console.log(info)
     startSession(info)
@@ -116,6 +118,8 @@ const Match = (): ReactElement => {
     console.log("getSessionById" + sid)
     getSessionById(sid)
       .then((res) => {
+        console.log('getSessionById success')
+        console.log(res)
         if (res.status === "matched") {
           setIsMatching(false)
           window.location.href = res.url
@@ -150,7 +154,7 @@ const Match = (): ReactElement => {
     setIsMatching(true)
     startMatch(goal)
       .then((res) => {
-        console.log('success')
+        console.log('startMatch success')
         console.log(res)
         if (res.status === "matched") {
           setIsMatching(false)
