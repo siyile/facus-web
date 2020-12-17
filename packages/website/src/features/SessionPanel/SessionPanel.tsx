@@ -12,7 +12,11 @@ const SessionPanel = (): ReactElement => {
   //get all session data
   const fetchSessions = async () => {
     const sessions = await getAllSession()
-    setSessions(sessions)
+    setSessions(
+      sessions
+        .sort((s1, s2) => s1.startTime - s2.startTime)
+        .filter((sessions) => sessions.startTime >= Date.now() / 1000)
+    )
   }
 
   useEffect(() => {
