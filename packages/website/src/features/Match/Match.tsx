@@ -122,7 +122,7 @@ const Match = (): ReactElement => {
         console.log(res)
         if (res.status === "matched") {
           setIsMatching(false)
-          window.location.href = res.url
+          // window.location.href = res.url
         } else {
           setTimeout(function () {
             continueMatch(sid);
@@ -158,7 +158,7 @@ const Match = (): ReactElement => {
         console.log(res)
         if (res.status === "matched") {
           setIsMatching(false)
-          window.location.href = res.url
+          // window.location.href = res.url
         } else {
           continueMatch(res.sid)
         }

@@ -12,13 +12,31 @@ export interface Res {
     }
   }
 }
-
+ /* Set rules to fill background */
+//  min-height: 100%;
+//  min-width: 1024px;
+ 
+//  /* Set up proportionate scaling */
+//  width: 100%;
+//  height: auto;
+ 
+//  /* Set up positioning */
+//  position: fixed;
+//  top: 0;
+//  left: 0;
 const useStyles = makeStyles((theme) => ({
-  container: {
+  container: { 
     backgroundImage: `url('/background.jpg')`,
-    height: '100vh',
     display: 'block',
     flexDirection: 'row',
+    minHeight: '100%',
+    minWidth: '1024px',
+    width: '100%',
+    height: 'auto',
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    backgroundSize: 'cover',
   },
   btns1: {
     position: 'absolute',
