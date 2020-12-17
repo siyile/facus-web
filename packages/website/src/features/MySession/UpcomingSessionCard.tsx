@@ -24,8 +24,6 @@ const UpcomingSessionCard = (props: Props): ReactElement => {
   const classes = useStyles()
   const bull = <Bullet />
 
-  const [rand] = useState(getRandomInt(1000000))
-
   return (
     <>
       <Card>
@@ -53,10 +51,10 @@ const UpcomingSessionCard = (props: Props): ReactElement => {
             </>
           )}
           <Typography variant={'body1'} component={'p'}>
-            {moment().add(rand, 'seconds').format('MMM Do')}
+            {moment(props.time * 1000).format('MMM Do')}
           </Typography>
           <Typography variant={'h2'} component={'p'}>
-            {moment().add(rand, 'seconds').format('hh:mm A')}
+            {moment(props.time * 1000).format('hh:mm A')}
           </Typography>
         </CardContent>
       </Card>

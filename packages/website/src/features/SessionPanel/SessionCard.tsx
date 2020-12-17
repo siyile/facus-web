@@ -47,11 +47,11 @@ const SessionCard = (props: Props): ReactElement => {
             {props.year} {bull} {props.subject}
           </Typography>
           <Typography variant={'body1'} component={'p'}>
-            {moment(props.time).format('MMM Do')} <Bullet />{' '}
+            {moment(props.time * 1000).format('MMM Do')} <Bullet />{' '}
             {`${props.during} min`}
           </Typography>
           <Typography variant={'h2'} component={'p'}>
-            {moment(props.time).format('hh:mm A')}
+            {moment(props.time * 1000).format('hh:mm A')}
           </Typography>
         </CardContent>
         <CardActions>
